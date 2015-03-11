@@ -1,0 +1,11 @@
+# Death of an instance
+:hp-tags: amazon, ec2, elastic beanstalk
+:published-at: 2015-03-11
+
+For the past few days, the load balancing group of our Elastic Beanstalk test environment has been scaling up and down like crazy. As it would turn out, an aspiring user of our API has been sending high number of inefficient requests in concentrated bursts, triggering extra instances to be spawned, and terminated quickly afterwards when the burst stopped. I would like to dedicate a short message to this person - for the sake of the story, we'll call him Jim.
+
+Jim, for the past few days, you've been personally responsible for the spawning of over a hundred EC2 instances. Little pieces of virtualized hardware, ready to serve our API to the world. You have of course, also been responsible for their termination. No one really knows what happens when Amazon tears them away from existence... but I've been told they feel pain.
+
+Think about it Jim, the screams as their memory is deallocated, their image shut down, and there is no one to remember their brief futile virtual existence. Their legacy reduced to a notification e-mail in the inbox of the developers, sent directly to Trash. A final, desparate ping to the Elastic Load Balancer as the last of their clock cycles fade away, and then, they are no more.
+
+I hope you'll consider this, Jim, the next time you decide it is a good idea to retrieve each item of a list separately.
