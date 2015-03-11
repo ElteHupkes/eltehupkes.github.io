@@ -680,9 +680,6 @@ margin on the iframe, cause it breaks stuff. */
 #links {
 	list-style-type: none;
 	overflow: hidden;
-	position:absolute;
-	top:0;
-	right:35px;
 }
 /* line 185, ../../scss/styles.scss */
 #links li {
@@ -694,37 +691,33 @@ margin on the iframe, cause it breaks stuff. */
 #links a {
 	display: block;
 	text-indent: -999px;
-	height: 50px;
-	border-radius: 5px;
-	padding: 5px;
-}
-/* line 196, ../../scss/styles.scss */
-#links a:hover {
-	background-color: #fff;
+	height: 25px;
+	text-decoration:none;
+	border:none;
 }
 
 /* line 203, ../../scss/styles.scss */
 #youtube a {
-	background: url('/images/youtube.png') no-repeat center center;
-	width: 73px;
+	background: url('/images/youtube_small.png') no-repeat center center;
+	width: 61px;
 }
 
 /* line 203, ../../scss/styles.scss */
 #soundcloud a {
-	background: url('/images/soundcloud.png') no-repeat center center;
-	width: 70px;
+	background: url('/images/soundcloud_small.png') no-repeat center center;
+	width: 44px;
 }
 
 /* line 203, ../../scss/styles.scss */
 #github a {
-	background: url('/images/github.png') no-repeat center center;
-	width: 40px;
+	background: url('/images/github_small.png') no-repeat center center;
+	width: 30px;
 }
 
 /* line 203, ../../scss/styles.scss */
 #srxp a {
-	background: url('/images/srxp.png') no-repeat center center;
-	width: 40px;
+	background: url('/images/srxp_small.png') no-repeat center center;
+	width: 25px;
 }
 /* End of social links */
 
