@@ -1,6 +1,6 @@
 # Iron Viking
 :hp-tags: ocr, strong viking
-:published-at: 2014-05-26
+:published_at: 2014-05-26
 
 Last saturday I ran the Iron Viking, a 42km obstacle run, managing
 to reach the finish first :). Guess it's
