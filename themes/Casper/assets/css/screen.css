@@ -680,6 +680,9 @@ margin on the iframe, cause it breaks stuff. */
 #links {
 	list-style-type: none;
 	overflow: hidden;
+	position:absolute;
+	top:0;
+	right:35px;
 }
 /* line 185, ../../scss/styles.scss */
 #links li {
