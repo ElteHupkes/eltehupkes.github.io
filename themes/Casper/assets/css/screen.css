@@ -661,7 +661,8 @@ margin on the iframe, cause it breaks stuff. */
     letter-spacing: -1px;
     font-weight: 700;
     font-family: "Open Sans", sans-serif;
-    color: #fff;
+    color: #222;
+	text-shadow:1px 1px #e2e2e2;
 }
 
 .page-description {
@@ -671,7 +672,8 @@ margin on the iframe, cause it breaks stuff. */
     font-weight: 400;
     font-family: "Merriweather", serif;
     letter-spacing: 0.01rem;
-    color: rgba(255,255,255,0.8);
+    color: #222;
+	text-shadow:1px 1px #e2e2e2;
 }
 
 .no-cover.main-header {
