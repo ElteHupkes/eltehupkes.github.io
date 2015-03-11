@@ -1,0 +1,9 @@
+# Query parameters talk slides
+:hp-tags: emberjs, query parameters
+:published_at: 2014-05-08
+
+Yesterday, I gave a talk about Query Parameters at the link:http://www.meetup.com/Amsterdam-Ember-js/[Amsterdam Ember.js meetup]. You can link:/files/meetup-qp-presentation/[find the slides I
+used here]. It was a great meetup, thanks everyone for being there!
+
+**Update**: The talk itself has also been put online, you can
+find it link:http://www.youtube.com/watch?v=nyD7CRuA-PU[here on YouTube].
