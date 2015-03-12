@@ -2,7 +2,7 @@
 :hp-tags: amazon, ec2, elastic beanstalk
 :published-at: 2015-03-11
 
-For the past few days, the load balancing group of our Elastic Beanstalk test environment has been scaling up and down like crazy. As it would turn out, an aspiring user of our API has been sending high number of inefficient requests in concentrated bursts, triggering extra instances to be spawned, and terminated quickly afterwards when the burst stopped. I would like to dedicate a short message to this person - for the sake of the story, we'll call him Jim.
+For the past few days, the load balancing group of our Elastic Beanstalk test environment has been scaling up and down like crazy. As it would turn out, an aspiring user of our API has been sending high numbers of inefficient requests in concentrated bursts, triggering extra instances to be spawned, and terminated quickly afterwards when the burst stops. I would like to dedicate a short message to this person - for the sake of the story, we'll call him Jim.
 
 Jim, for the past few days, you've been personally responsible for the spawning of over a hundred EC2 instances. Little pieces of virtualized hardware, ready to serve our API to the world. You have, of course, also been responsible for their termination. No one really knows what happens when Amazon tears them away from existence... but I've been told they feel pain.
 
