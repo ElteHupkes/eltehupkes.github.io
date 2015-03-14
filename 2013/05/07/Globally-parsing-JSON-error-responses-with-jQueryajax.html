@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Globally parsing JSON error responses with &#x60;jQuery.ajax()&#x60;</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="//elte.me/themes/Casper/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//elte.me/themes/Casper/assets/css/screen.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html" />
+    
+    <meta property="og:site_name" content="Elte Hupkes" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Globally parsing JSON error responses with &#x60;jQuery.ajax()&#x60;" />
+    <meta property="og:description" content="Proper RESTful API&amp;#8217;s use status codes to indicate the result of requests. This means that for PUT/PATCH requests a 400 Bad Request or a 409 Conflict will be returned if the data in the request is invalid...." />
+    <meta property="og:url" content="http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html" />
+    <meta property="article:published_time" content="2013-05-06T22:00:00.000Z" />
+    <meta property="article:modified_time" content="2015-03-14T20:12:44.476Z" />
+    <meta property="article:tag" content="jquery" />
+    <meta property="article:tag" content="rest" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Globally parsing JSON error responses with &#x60;jQuery.ajax()&#x60;" />
+    <meta name="twitter:description" content="Proper RESTful API&amp;#8217;s use status codes to indicate the result of requests. This means that for PUT/PATCH requests a 400 Bad Request or a 409 Conflict will be returned if the data in the request is invalid...." />
+    <meta name="twitter:url" content="http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Elte Hupkes",
+    "author": {
+        "@type": "Person",
+        "name": "Elte Hupkes",
+        "image": "https://avatars.githubusercontent.com/u/726962?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "http://metaphoric.nl"
+    },
+    "headline": "Globally parsing JSON error responses with &#x60;jQuery.ajax()&#x60;",
+    "url": "http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html",
+    "datePublished": "2013-05-06T22:00:00.000Z",
+    "dateModified": "2015-03-14T20:12:44.476Z",
+    "keywords": "jquery,  rest",
+    "description": "Proper RESTful API&amp;#8217;s use status codes to indicate the result of requests. This means that for PUT/PATCH requests a 400 Bad Request or a 409 Conflict will be returned if the data in the request is invalid...."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="Elte Hupkes" href="http://elte.me/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+</head>
+<body class="post-template tag-jquery tag-rest">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="http://elte.me">Home</a>
+        <!-- <a class="subscribe-button icon-feed" href="http://elte.me/rss/">Subscribe</a> -->
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-jquery tag-rest">
+
+        <header class="post-header">
+            <h1 class="post-title">Globally parsing JSON error responses with &#x60;jQuery.ajax()&#x60;</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-05-07">07 May 2013</time>  on <a href="http://elte.me/tag/jquery">jquery</a>, <a href="http://elte.me/tag/rest"> rest</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div class="paragraph">
+<p>Proper RESTful API&#8217;s use status codes to indicate the result of requests. This means that for <code>PUT</code>/<code>PATCH</code>
+requests a <code>400 Bad Request</code> or a <code>409 Conflict</code> will be returned if the data in the request is invalid. Since this
+is a solvable error for the end user, the API might return descriptive errors, perhaps something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+	"errors": {
+		"email": "Invalid e-mail address"
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Awesome, but if you want to actually <em>show</em> these errors to the end user you&#8217;ll need access to
+the request data. If you&#8217;re using jQuery, accessing data for requests with a 2xx (success) status code is easy;
+if the request&#8217;s <code>Content-Type</code> is <code>application/json</code>, jQuery will parse it for you. For 4xx and 5xx requests not
+so much though; you need to do something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$.post('/whatever', '{}').fail(function(xhr) {
+	try {
+		var validationErrors = JSON.parse(xhr.responseText);
+		displayErrors(validationErrors.errors);
+	} catch(e) {
+		// Invalid JSON error handling
+	}
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re a bit lazy like me though, you don&#8217;t want to do this manually for every scenario in which you&#8217;ll be handling
+errors like this. Preferably, the JSON data is automatically available in every XHR&#8217;s fail callback.
+Unfortunately, <code>$.ajaxError</code> and <code>$.ajaxComplete</code> are worthless in this scenario, since they fire <em>after</em> user defined
+callbacks. The solution is overriding <code>$.ajax</code> so you can always assign the first callback. A solution like this
+can be found <a href="http://wingkaiwan.com/2012/10/21/deserialize-error-in-json-for-jquery-ajax/">on this page</a>, but it is
+incomplete, as any "error" callback assigned through in `$.ajax&#8217;s options will still run before the global callback.
+I therefore rewrote this code to work in that scenario as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">(function($) {
+	var old = $.ajax;
+	$.ajax = function(url, options) {
+		if (!options) {
+			options = url || {};
+		}
+
+		var fail;
+		if (options.error) {
+			// Remove the error callback and add it
+			// as a fail callback on the XHR later on.
+			fail = options.error;
+			delete options.error;
+		}
+
+		var xhr = old.call(this, url, options).fail(function(xhr) {
+			if (xhr.getResponseHeader('content-type').indexOf('application/json') &gt; -1) {
+				try {
+					xhr.JSONdata = JSON.parse(xhr.responseText);
+				} catch(e) {}
+			}
+		});
+
+		if (fail) {
+			// Assign the error callback
+			xhr.fail(fail);
+		}
+
+		return xhr;
+	}
+})(jQuery);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There you go! Now in your fail callback you can simply use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$.post('/whatever', '{}').fail(function(xhr) {
+	if (xhr.JSONdata) {
+		displayErrors(xhr.JSONdata.errors);
+	}
+});</code></pre>
+</div>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/726962?v=3)"><span class="hidden">Elte Hupkes's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="">Elte Hupkes</a></h4>
+
+                    <p>Read <a href="">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Amsterdam</span>
+                    <span class="author-link icon-link"><a href="http://metaphoric.nl">http://metaphoric.nl</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Globally%20parsing%20JSON%20error%20responses%20with%20%60jQuery.ajax()%60&amp;url=http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://elte.me/2013/05/07/Globally-parsing-JSON-error-responses-with-jQueryajax.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+        <section class="post-comments">
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+          var disqus_shortname = 'metaphoric'; // required: replace example with your forum shortname
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </section>
+
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="http://elte.me">Elte Hupkes</a> &copy; 2015
+
+            <ul id="links">
+                <li id="github"><a href="http://github.com/ElteHupkes" title="See my stuff on GitHub">My stuff on GitHub</a></li>
+                <li id="youtube"><a href="http://www.youtube.com/user/Ellutu" title="Watch me on YouTube">Watch me on YouTube</a></li>
+                <li id="soundcloud"><a href="http://soundcloud.com/elte-hupkes" title="Hear me on SoundCloud">Hear me on SoundCloud</a></li>
+                <li id="srxp"><a href="http://www.srxp.com" title="My company SRXP">My company SRXP</a></li>
+            </ul>
+		</section>
+        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+    </footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//elte.me/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
+    <script type="text/javascript" src="//elte.me/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+
+</body>
+</html>
