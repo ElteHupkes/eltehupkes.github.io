@@ -1,0 +1,10 @@
+# Ember.js query parameters
+:hp-tags: emberjs, query parameters
+:published_at: 2013-07-07
+
+Today I finished the first implementation of a workaround for something that has been bothering me for
+quite a while: the absence of query parameters in link:http://emberjs.com[Ember.js]. I could write a lot
+about it here, but I already have - on GitHub :). So without further adue,
+link:https://github.com/ElteHupkes/ember-query-params[my Ember.js query parameter workaround]!
+
+*Update* Query parameters have been fully integrated in the Ember.JS core for a while no, so luckily there is no more need for this library.
