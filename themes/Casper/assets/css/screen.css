@@ -1677,6 +1677,12 @@ body:not(.post-template) .post-title {
     .post-content img {
         padding: 0;
     }
+    
+    /* Caption style added by Elte */
+    .post-content .imageblock .title {
+        font-style:italic;
+        margin-bottom:1em;
+    }
 
     .post-content .full-img {
         width: auto;
