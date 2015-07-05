@@ -15,7 +15,7 @@ The course was a track slightly longer than 1km, with 10 obstacles. The obstacle
 
 [[toughest-hands]]
 .Alexander tagging me out not too long into the race.
-image::/images/ocr/2015-toughest24/tag.jpg[]
+image::ocr/2015-toughest24/tag.jpg[]
 
 At 2pm the race started, with Rick being our first runner. We decided our initial strategy would be to switch runners every three laps, but quickly found that due to the heat and the intensity of the round this was too much and dialed it down to two. Originally I was to be the third runner, but I got delayed getting my ankle taped and ended up starting fourth. My first rounds went by uncomfortably, not getting ideal grip and swings and using too much strength. After a while I developed a strategy for each obstacle and things were getting easier.
 
@@ -23,13 +23,13 @@ When several switches had passed everyone was getting the hang of the obstacles 
 
 [[toughest-board]]
 .Slowly but steadily, #SWAGMEN was moving up the board...
-image::/images/ocr/2015-toughest24/board.jpg["#SWAGMEN"]
+image::ocr/2015-toughest24/board.jpg["#SWAGMEN"]
 
 For the night we had devised a sleeping strategy where each person would get 90 minutes of sleep while the other three continued the 2-2-2 switches. The person sleeping would also be able to eat some substantial food to be digested during that sleep. Patrick had developed a sore knee and was the first to go to sleep. Rick took his place after some time, to be relieved by Alexander later. Meanwhile the shorter rest periods and inability to eat much were taking their toll on me and I was starting to get severely fatigued and looking forward to my sleeping slot. However, a minor shitstorm was about to hit the stadium for team Swagmen. Patrick’s knee was giving way at an alarming rate up to the point where he could not continue (and was actually brave enough to admit that he couldn’t). This meant we were shortly down to two men while Alexander was sleeping. I knew that our third position would probably be unmaintainable with just two people and saw my oh so welcome sleep melt away before my eyes. It was at this point that the race started to get brutal for me. We were down to three men, I hadn’t slept or properly eaten, my stomach still cramped up every now and then and we still had 10 hours to go. My hands were significantly bruised from all the grip obstacles and hurted more every round. Also, it was 2am, dark and cold, and I was still only wearing the sleeveless race-vest because I was simply too tired to sacrifice rest by walking to the tent and getting extra clothes. A part of me just wanted to lie down, cry and give up at that time but rationally I knew this was going to end one of two ways: we would keep that third position, or I would collapse somewhere on the track while trying. Time would tell which option applied, and things were about to get even worse.
 
 [[toughest-hands]]
 .My hands were pretty messed up.
-image::/images/ocr/2015-toughest24/hands.jpg[]
+image::ocr/2015-toughest24/hands.jpg[]
 
 The second rotation after Alexander was woken up I found him instead of Rick waiting to tag me out. He told me Rick was completely tapped out and went to bed to get some sleep to see if he could return to running in a couple of hours. We were down to two again. I honestly don’t really remember how we got through these hours, except that Alex completely saved my ass by running four laps instead of two twice so I could get some extra rest. The rising sun provided a much needed mental boost, though it brought with it a quickly rising temperature which had already passed 20 degrees at 7am. We even managed to shortly overtake team Icebug/OMPU which had been ahead of us for the entire race with just the two of us, though I suspect they were taking it easy at that point.
 
@@ -45,4 +45,4 @@ Was it worth it? Hell, I don’t even know, will have to check the remaining phy
 
 [[toughest-monkey]]
 .Me on the monkey bars. There's blood on the bar, just sayin'.
-image::/images/ocr/2015-toughest24/monkey.jpg[]
+image::ocr/2015-toughest24/monkey.jpg[]
