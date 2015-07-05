@@ -947,6 +947,12 @@ body:not(.post-template) .post-title {
     margin: 0 -13%;
 }
 
+/* Caption style added by Elte */
+.post-content .imageblock .title {
+    font-weight: italic;
+    margin-bottom: 1em;
+}
+
 /* The author credit area after the post */
 .post-footer {
     position: relative;
@@ -1676,12 +1682,6 @@ body:not(.post-template) .post-title {
 
     .post-content img {
         padding: 0;
-    }
-    
-    /* Caption style added by Elte */
-    .post-content .imageblock .title {
-        font-style:italic;
-        margin-bottom:1em;
     }
 
     .post-content .full-img {
