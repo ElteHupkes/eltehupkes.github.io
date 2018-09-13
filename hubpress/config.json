@@ -12,7 +12,9 @@
     "cover": "/images/cover.jpg",
     "googleAnalytics": "UA-61302233-1",
     "disqus": "metaphoric",
-    "url": "http://elte.me"
+    "url": "http://elte.me",
+    "delay": "",
+    "postsPerPage": ""
   },
   "socialnetwork": {
     "email": "elte@hupkes.org",
@@ -20,10 +22,14 @@
     "googleplus": "Ellutu",
     "linkedin": "eltehupkes",
     "facebook": "Ellutu",
-    "github": "ElteHupkes"
+    "github": "ElteHupkes",
+    "instagram": "",
+    "pinterest": "",
+    "flickr": "",
+    "stackoverflow": ""
   },
   "theme": {
-    "name": "casper",
+    "name": "caspe",
     "url": "//elte.me/themes/casper"
   },
   "urls": {
