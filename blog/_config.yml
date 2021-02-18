@@ -26,6 +26,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://elte.me" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ElteHupkes
 github_username:  ElteHupkes
+facebook_username: ElteHupkes
 
 paginate:           5
 paginate_path:      "/posts/page:num/"
@@ -34,6 +35,7 @@ paginate_path:      "/posts/page:num/"
 #theme: minima
 theme: jekyll-theme-clean-blog
 plugins:
+  - jekyll-asciidoc
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
