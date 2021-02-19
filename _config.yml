@@ -22,7 +22,7 @@ title: Elte Hupkes
 email: elte@hupkes.org
 description: >- # this means to ignore newlines until "baseurl:"
   An attempt at a digital presence.
-#baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://elte.me" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ElteHupkes
 github_username:  ElteHupkes
