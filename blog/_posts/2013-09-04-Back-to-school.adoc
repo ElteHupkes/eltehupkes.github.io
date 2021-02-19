@@ -1,0 +1,14 @@
+---
+layout: post
+title: "Back to school!"
+date: 2013-09-04
+background: '/images/cover.jpg'
+tags: CLS University
+---
+
+This week I started my master's in Computational Science at the University of Amsterdam. 
+It's been two years and a half since I've taken any classes - my last uni-related 
+activity was my link:https://github.com/ElteHupkes/ScoreFollower[thesis] which I finished
+back in June 2012, and the last CS course took place half a year before that.
+
+After a year of nothing but work, I'm curious how it's going to be!

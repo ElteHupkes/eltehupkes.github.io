@@ -1,0 +1,11 @@
+---
+layout: post
+title: "Mud Masters Haarlemmermeer 2015"
+date: 2015-03-09
+background: '/images/cover.jpg'
+tags: ocr
+---
+
+After a tough race I became the winner of Mud Masters Haarlemmermeer 2015 last Saturday, qualifying for the World Cup in the US in October this year in the process. I'm psyched!
+
+image::/images/ocr/2015-mm-haarlemmermeer/finish.jpg[Elte Hupkes happy at the finish line.]

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Ember.js Query Parameters - History and state</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section>
+                <h1>Ember.js Query Parameters</h1>
+                <h3>History and state</h3>
+                <p>
+                    <small><a href="http://metaphoric.nl">Elte Hupkes</a> / <a href="mailto:eltehupkes@srxp.com">eltehupkes@srxp.com</a></small>
+                </p>
+            </section>
+
+            <section>
+                <h1>Hey!</h1>
+                <p>
+                    <a href="http://metaphoric.nl">Elte Hupkes</a> (<a href="mailto:eltehupkes@srxp.com">eltehupkes@srxp.com</a>)
+                </p>
+                <p>
+                    <a href="http://www.srxp.com" target="_blank"><img src="img/srxp-logo-tagline.png" alt="SRXP" width="400" /></a>
+                </p>
+            </section>
+            <section>
+                <h2>Query params</h2>
+                <p>
+                    <code><span class="fragment">/expenses</span><span class="fragment">?sort=date</span><span class="fragment">&filter=drinks</span></code>
+                </p>
+            </section>
+            <section>
+                <!--
+                First, let me discuss briefly the history of the query parameters, and
+                why I think it took so long to get to where we are. As with many frameworks,
+                Ember.js has a "convention over configuration" policy, which basically
+                means the most sensible default is built-in, and any other use cases
+                should be configurable. For Query Parameters, there are two main conceivable
+                use-cases;
+                -->
+                <h3>The issues</h3>
+            </section>
+            <section>
+                <!--
+                At SRXP we have potentially long lists of data, sorted and filtered
+                server side. This means a change in query parameters needs a fetch
+                from the server. However, an equally conceivable use case is where
+                all the data is already loaded, and sorting / filtering / anything
+                is done on the client side.
+                Implementing the latter would be relatively straightforward, since
+                all complicated routing logic can be bypassed. This however provides
+                no support for the former. Implementing the former would force a
+                server-reload pattern on people who might not need it.
+                -->
+                <h3>Model (Route) vs. Controller</h3>
+            </section>
+            <section>
+                <h3>Query string</h3>
+                <!--
+                Ember.js routing structures differ from classic server-side MVC
+                in that each URL has multiple end-points, namely each route.
+                The issue of having just one global query string is that
+                we have to determine which parameter belongs to which route,
+                because if we don't in the model-based option we'd have to
+                refresh each route on a parameter change if we really
+                need to change just one.
+
+                Therefore matrix parameters were considered for a while (I was
+                a big fan of this personally), but there were some objections;
+                for one thing their unfamiliarity might scare people away. More
+                importantly though, some web servers turned out not to support
+                their URL-style, which would cause problems with resolving pushState
+                URLs.
+                -->
+                <p class="fragment">
+                    <code>/we/have/many/routes?yet=only_one_query_string</code>
+                </p>
+                <p class="fragment">
+                    <code>/not;all=servers/support;matrix=parameters</code>
+                </p>
+            </section>
+            <section>
+                <!--
+                In either case, there was a need for query params, so
+                people started writing libraries. The two main ones
+                were ember-query by Alex Speller, and ember-query-params
+                which was written by me. These libraries had similar
+                features (route based, single query string) though
+                their implementations were somewhat different. Both
+                had to provide some nasty hacks to fool the router though
+                since most relevant router code was hidden away in closures
+                which could not be overridden in any way.
+                -->
+                <h3>Homemade solutions</h3>
+                <ul>
+                    <li class="fragment"><code>ember-query</code> (Alex Speller)</li>
+                    <li class="fragment"><code>ember-query-params</code> (Elte Hupkes)</li>
+                </ul>
+            </section>
+            <section>
+                <!--
+                It was at this point that Alex and I started talking on GitHub
+                about collaborating on a One True Solution for query parameters
+                that could be merged into the Ember core. This was right before
+                I went on vacation, and when I came back Alex had already
+                done the awesome job of implementing the stuff on his own.
+                This resulted in the first "native" query parameter
+                implementation in Ember.js. This implementation borrowed a
+                lot of ideas from our add-ons, query parameters were global,
+                specified by the route, and affected the route's model.
+                This of course again meant the controller-centered case was
+                left out, and it required some nasty API-changes to routes...
+                -->
+                <h3>Native Implementation</h3>
+            </section>
+
+            <section>
+                <!--
+                ... therefore, within a few weeks this solution was replaced
+                by the current solution, which was tremendously confusing
+                for everyone not closely related to the process, since
+                the documentation of the previous solution was actually
+                already written and online for quite some time, and completely
+                swapped out and replaced by something new. Code obviously
+                also broke. However, this new implementation is very clean
+                and supports all cases, so I would now like to briefly talk
+                about how it works.
+                -->
+                <h3>Native Implementation 2.0</h3>
+            </section>
+            <section>
+                <h3>Controller ♥ Query params</h3>
+<pre class="fragment"><code class="js">App.SortedPostsController = Ember.ArrayController.extend({
+    queryParams: ['sortVar:sort', 'page'],
+    sortVar: 'date:desc'.
+    page: 1
+});
+</code></pre>
+            </section>
+            <section>
+                <h3>Controller ♥ Route</h3>
+<pre class="fragment"><code class="js">App.PostsRoute = Ember.Route.extend({
+    // Flexible controller name
+    controllerName: 'sortedPosts',
+
+    // Hooks receive params
+    model: function(params, transition) {
+        console.log(params.sort); // date:asc
+        console.log(params.page); // 1
+    }
+});
+</code></pre>
+
+            </section>
+            <section>
+            <h3>Optional refresh</h3>
+<pre><code class="js">App.PostsRoute = Ember.Route.extend({
+    queryParams: {
+        sort: { refreshModel: true }
+    }
+
+    // Alternatively
+    actions: {
+        queryParamsDidChange: function(changed, all, removed) {
+            if ('sort' in changed) {
+                // Awesome new refresh method!
+                this.refresh();
+            }
+        }
+    }
+});
+</code></pre>
+            </section>
+            <section>
+                <h3>Defaults</h3>
+<pre><code class="js">controller.set('sortVar', 'date:desc');
+// URL: /posts?sort=date:desc
+
+controller.set('sortVar', 'date:asc');
+// URL: /posts
+</code></pre>
+            </section>
+            <section>
+                <h3>Types</h3>
+<pre><code class="js">// URL: /posts?page=3
+console.log(typeof controller.get('page')); // "number"
+</code></pre>
+            </section>
+            <section>
+                <h1>/?query=</h1>
+                <p>
+                    <small><a href="http://metaphoric.nl">Elte Hupkes</a> / <a href="mailto:eltehupkes@srxp.com">eltehupkes@srxp.com</a></small>
+                </p>
+            </section>
+        </div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,9 @@
+---
+layout: post
+title: "Ember.JS at SRXP"
+date: 2015-03-14
+background: '/images/cover.jpg'
+tags: emberjs talk
+---
+
+Last Wednesday I gave a short introductory talk about the Ember.JS app we have developed at link:https://www.srxp.com[SRXP]. There wasn't much in the talk itself, though it sparked sort of a discussion on ember-cli (transitioning to it in particular). I figured I'd share the slides I used anyway, they can be found link:https://github.com/ElteHupkes/ember-meetup-srxp-showtell[here on GitHub]. To actually go through them you can use link:http://rawgit.com/ElteHupkes/ember-meetup-srxp-showtell/master/index.html[this rawgit link].

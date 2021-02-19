@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Countdown</title>
+  <script type="text/javascript">
+String.prototype.paddingLeft = function (paddingValue) {
+   return String(paddingValue + this).slice(-paddingValue.length);
+};
+
+var deadline = 'June 2 2016 11:20:00 GMT+02:00';
+
+function getTimeRemaining(endtime){
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor( (t/1000) % 60 );
+  var minutes = Math.floor( (t/1000/60) % 60 );
+  var hours = Math.floor( (t/(1000*60*60)) % 24 );
+  var days = Math.floor( t/(1000*60*60*24) );
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function startInterval() {
+ var el = document.getElementById('clock');
+  el.innerHTML = 'Mad calculating...';
+  
+ setInterval(function() {
+    var d = getTimeRemaining(deadline);
+    if (d.total < 0) {
+      el.innerHTML = 'It already has!';
+      return;
+    }
+  
+    var days = d.days == 1 ? 'day' : 'days';
+    var hrs = ('' + d.hours).paddingLeft("00");
+    var mins = ('' + d.minutes).paddingLeft("00");
+    var secs = ('' + d.seconds).paddingLeft("00");
+    el.innerHTML = d.days + ' ' + days + ', '+hrs+':'+mins+':'+secs+ ' hours';
+  }, 1000); 
+}
+  </script>
+  <style type="text/css">
+html, body { width:100%; height: 100%; }
+body {
+  padding: 0;
+  margin: 0;
+  color: black;
+  background: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
+  font-size: 50px;
+}
+
+#txt {
+  clear:both;
+  line-height:90px;
+}
+
+#block {
+  border-bottom:2px solid black;
+  overflow: auto;
+  width: 850px;
+  margin:0 auto;
+}
+
+#clock { 
+  float:left;
+  line-height: 200px;
+  padding-left: 20px;
+  white-space: nowrap;
+}
+
+#me {
+  float:right;
+  display:block;
+  height: 200px;
+}
+  </style>
+</head>
+<body onload="startInterval();">
+  <div id="block">
+    <div id="txt">
+          My plane lands in Zürich in:
+    </div>
+    <div id="clock"></div>
+    <img id="me" alt="Yay" src="http://elte.me/images/happy-elte.png" />
+  </div>
+</body>
+</html>
