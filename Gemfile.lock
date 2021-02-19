@@ -264,9 +264,11 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages (~> 212)
+  jekyll (= 3.9.0)
   jekyll-asciidoc
   jekyll-feed (~> 0.12)
   jekyll-paginate
+  jekyll-remote-theme
   jekyll-sitemap
   jekyll-theme-clean-blog (~> 4.0.10)
   tzinfo (~> 1.2)
