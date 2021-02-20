@@ -12,6 +12,8 @@ A few years later I really had the intention of writing more blog posts (I had t
 
 Which brings us to today. I'm not _sure_ I'm going to stop the experimentation altogether, but recently I find myself having... thoughts. Thoughts that want out. Preferably by means of frantic typing. Now a blog engine that takes 15 minutes to save your post and then most probably crashes isn't _super_ conducive to this situation, so I figured I'm going full on boring and installed Jekyll for GitHub Pages. Two Ruby version managers and a couple of failed link / compilation cycles later, here we are! A boring new blog. I'll probably be moving all my old posts over one by one (no rush), and then... let the frantic typing commence.
 
+Update: I should probably mention the hours I spent shouting at GitHub for failing to build my Jekyll blog and converting over the old HubPress asciidoc files to something I could render here (without being able to using the asciidoc plugin for Jekyll). That was after I wrote this post.
+
 [hubpress]: https://github.com/HubPress/hubpress.io
 [metaphoricjs]: https://github.com/ElteHupkes/MetaphoricJS
 [srxp]: https://www.srxp.com
