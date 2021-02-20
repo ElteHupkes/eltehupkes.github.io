@@ -1,0 +1,95 @@
+---
+layout: post
+title: "PHP, MySQL and UTF-8"
+date: 2011-03-10
+background: '/images/cover.jpg'
+tags: php mysql
+---
+
+        <div class="paragraph">
+<p>There&#8217;s a lot of stuff written about this all over the internet: getting PHP to communicate with MySQL correctly
+using UTF-8. I ran into a couple of problems myself, and this is the story about how I got them fixed.</p>
+</div>
+<div class="sect1">
+<h2 id="scrambled-characters">Scrambled characters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MySQL, being quite old, uses latin1 as its default encoding (unless it is compiled/configured otherwise).
+This has bugged me forever, especially since it isn&#8217;t all that clear how to correct it.
+UTF-8 is most definitely the standard for webpages these days, so bytes are being sent to and from all
+clients in this encoding.</p>
+</div>
+<div class="paragraph">
+<p>Today, while browsing through my database using PhpMyAdmin though, I noticed that all special characters
+(such as é) were displayed as a set of weird scrambled characters we all know from encoding problems.
+The characters were displaying fine in my application. Although I&#8217;m pretty confident about my developing skills,
+I found it hard to believe that such an established product as PhpMyAdmin would get it wrong, so I started doing some
+research. Quite some time later I finally figured out what happened.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what-happened">What happened</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MySQL converts characters between charsets if it thinks it&#8217;s supposed to. This decision is made based on the
+encoding setting of the connection, so even if all your tables, data, etc are correctly set to UTF-8, MySQL
+will still convert characters if the connection isn&#8217;t. Small example: suppose you send a chunk of UTF-8 data to
+be stored in a UTF-8 column in a UTF-8 table in a UTF-8 database (that&#8217;s right). The connection, however, has latin1
+encoding (the MySQL default, hooray). Upon recieving the data, MySQL thus converts the characters it thinks are latin1
+characters to their corresponding UTF-8 characters, <em>saving the wrong bytes to the database</em>.
+When retrieving the data, however, the same conversion is done only the other way around, so you&#8217;ll actually
+get the right bytes back from the database.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="why-you-dont-want-it-to-happen">Why you don&#8217;t want it to happen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The part in bold is exactly why you don&#8217;t want this to happen; incorrect data is saved to the database.
+Imagine you&#8217;d want to search through this data using a query, you&#8217;d have a really hard time matching characters,
+using MySQL string functions, etcetera.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-fix-it">How to fix it</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the tricky part. I&#8217;ve seen lots of people saying they simply set the connection encoding using
+the following query:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SET NAMES utf8</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The good thing about this solution is, it works, and it&#8217;s simple. However, running an additional query-call for
+every request immediately struck me as odd and inefficient; maybe there&#8217;s a better way?</p>
+</div>
+<div class="paragraph">
+<p>Obviously, there is; assuming you can alter your server config (get a VPS people, it&#8217;s worth it). Now there&#8217;s
+some ambiguity floating around the web about how to do it; eventually I solved it by adding three lines to my "my.cnf"
+file (if you&#8217;re on Ubuntu like me, it&#8217;s located in /etc/mysql/my.cnf (better yet, you can add a file to
+/etc/mysql/conf.d/ with these lines). They need to be placed in the <code>[mysqld]</code> section of my.cnf:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[mysqld]
+..........
+collation-server = utf8_unicode_ci
+init-connect = 'SET NAMES utf8'
+character-set-server = utf8</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now check the results of the query <code>SHOW VARIABLES LIKE 'character_set%'</code></p>
+</div>
+<div class="paragraph">
+<p>Should show mostly "utf8", especially for the <code>character_set_results</code> and <code>character_set_server</code> settings!</p>
+</div>
+</div>
+</div>
+

@@ -1,0 +1,65 @@
+---
+layout: post
+title: "The PHP `maybe` function"
+date: 2013-06-17
+background: '/images/cover.jpg'
+tags: php
+---
+
+        <div class="paragraph">
+<p>Sometimes you just have a revelation, something that has bothered you for years that is actually quite easy to solve. For
+me, one of those things was the common PHP-scenario in which you check if a certain array key exists, if so return it,
+and otherwise return some default value. This is relatively easy with a ternary operator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">$var = array_key_exists($someHash, 'key') ? $someArray['key'] : 'default';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What bugs me about this though is the repetition: You have to type both <code>$someHash</code> and <code>key</code> twice. It&#8217;s a small
+thing, but it&#8217;s been bothering me for ages. Actually I think it started actively bothering me when I started using
+JavaScript on a daily basis, where you can simply use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">var v = someHash['key'] || 'default';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A similar construct in PHP would not only return the wrong value - it would also raise a <code>Notice</code> if the key wasn&#8217;t
+present. So last week I wrote this function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">/**
+ * Returns the key $k on array $arr if it exists,
+ * the default otherwise.
+ * @param array $arr The array to check
+ * @param string $k The key to return
+ * @param mixed $default The default value if the key doesn't exist.
+ * @return string
+ */
+function maybe($arr, $k, $default = '') {
+	return array_key_exists($k, $arr) ? $arr[$k] : $default;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And now I can simply use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">$var = maybe($someHash, 'key', 'default');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why I haven&#8217;t thought this before is beyond me. I&#8217;m very happy about it though.</p>
+</div>
+<div class="paragraph">
+<p><strong>EDIT</strong>: The only downside to this is of course performance - contrary to the
+ternary operator all possible results will be evalutated. When they&#8217;re simple types
+the difference is negligible though, and probably worth the increased simplicity.
+Be wary when using this for something more computationally intensive though.</p>
+</div>
+

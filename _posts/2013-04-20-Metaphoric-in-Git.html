@@ -1,0 +1,74 @@
+---
+layout: post
+title: "Metaphoric ... in Git."
+date: 2013-04-20
+background: '/images/cover.jpg'
+tags: javascript php metaphoric
+---
+
+        <div class="paragraph">
+<p>After a while of having Metaphoric lay dormant (the last thing I posted was back in 2011), I started thinking about
+what I could improve in order for me to actually start using it. It&#8217;s not that I don&#8217;t have anything to write about;
+actually I run into plenty of interesting stuff during an average day. I built the last Metaphoric when I was really
+into making everything dynamic and using <a href="http://www.cakephp.org">CakePHP</a> on a daily basis, so it used Cake backed up
+by the Croogo CMS (as I was too lazy to write the functionality myself). Turns out this was an unfortunate choice,
+because while I&#8217;m not too lazy to write blog posts, I actually <em>am</em> too lazy to maintain the blog software itself.
+After a while the Cake version got outdated, Croogo got outdated and everything got terribly slow.
+So I sat down and looked at the things I thought would be important for my new blog:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Low content-creation treshold. When I was writing blog posts I often found myself typing its content in a text editor,
+only to copy it over to the CMS later and save it; obviously repeating the process when I was making a change. Saving
+changes was slow, adding files was a pain, markup was a pain&#8230;&#8203; actually everything about the content creation process
+was a pain. This needed to change.</p>
+</li>
+<li>
+<p>Modified layout. The last one was actually a little too fancy, and didn&#8217;t focus too much on what a blog should focus
+on: reading. Didn&#8217;t want to spend too much effort here; just take some parts of the existing layout and make it simpler
+and more reading-friendly.</p>
+</li>
+<li>
+<p>Static content. I don&#8217;t care much about having everything dynamic anymore; blog content after all is simply
+static content; so that&#8217;s the way it should be presented.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I started <a href="http://github.com/ElteHupkes/MetaphoricJS">MetaphoricJS</a> a while ago to play around with
+<a href="http://www.emberjs.com">EmberJS</a>, but decided this is also not quite suited for a blog (I don&#8217;t remember which article
+pointed this out, but blogs are mostly about sporadic users viewing one or two of your posts, why have them download
+a whole bunch of JS?). Besides, I get a lot of EmberJS playing time at
+my job at <a href="http://www.srxp.com">SRXP</a> these days. So instead I took an entirely different approach:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>I like having everything in repos; so why couldn&#8217;t my blog be a repo? Step 1: create Git-repo for blog.</p>
+</li>
+<li>
+<p>Posts are just text files in the repo; every post is simply a file written in Markdown, which of course means
+I can still mix in HTML wherever I like. But oh no, what if I want to create a post while on the road without access
+to my own computer (read: private key for checking out the repo)? Solution: put the entire thing on GitHub,
+which supports sweet inline-editing of the repository.</p>
+</li>
+<li>
+<p>Screw managing and storing content yourself: I already used YouTube for videos; now I&#8217;ll use SoundCloud for sounds,
+and whatever-box for whatever may come up in the future. There&#8217;s a better solution for everything than the one I
+have the time to come up with.</p>
+</li>
+<li>
+<p>A Rakefile takes the sources and turns them into a blog, neat, fast and static. Comments were spam-only until now,
+so these are out. I can always add Disqus or Facebook Comments later, no biggy. I&#8217;ve been wanting to use this
+Rake-thingy for a while now; seems everyone is using it these days. The only experience I have with Ruby was in
+my first year of Computer Science, and I recall we did not get along well. Ruby is really popular though, so maybe
+we got off on the wrong foot and it deserves another chance.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>And so, here it is: the new, simplified Metaphoric. I&#8217;m looking forward to writing about more stuff, especially
+next week after my knee operation when I won&#8217;t be able to do much.</p>
+</div>
+

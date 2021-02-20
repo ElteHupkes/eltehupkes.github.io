@@ -1,0 +1,85 @@
+---
+layout: post
+title: "Understanding `required` and `allowEmpty` in CakePHP validation rules"
+date: 2013-06-03
+background: '/images/cover.jpg'
+tags: cakephp
+---
+
+        <div class="paragraph">
+<p>One of the most confusing things about CakePHP&#8217;s validation rules is the meaning of the <code>required</code> and (especially)
+<code>allowEmpty</code> flags. Therefore I figured I&#8217;d give them both a quick walkthrough that you can reference whenever
+you get confused.</p>
+</div>
+<div class="paragraph">
+<p>So here are some important facts about Cake validation rules, in bullet points:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Validation rules for ields that are not specified in the <code>fieldList</code> for a <code>Model::validates()</code> or <code>Model::save()</code>
+call are never executed; these fields will not be saved so they are completely ignored. The
+<code>allowEmpty</code>/<code>required</code> flags will not change this behavior.</p>
+</li>
+<li>
+<p><code>required</code> and <code>allowEmpty</code> only affect whether a validation rule is executed or not.
+They do not affect the rule itself, they are merely meant as an easy way to break out of common scenarios without
+having to add extra rules.</p>
+</li>
+<li>
+<p>Now that we&#8217;ve established that; <code>required</code> only checks whether a field is present on the input array using
+<a href="http://www.php.net/array_key_exists"><code>array_key_exists</code></a>. If the field is not present, the validation
+rules for this field are not executed, because you cannot use the value of a field that doesn&#8217;t exist.
+With <code>required = true</code> in this scenario the validation rule will fail
+with the message of the rule the <code>required</code> flag was set on, while <code>required = false</code> would lead to the field&#8217;s
+validation succeeding without any rule being executed. The default value of <code>required</code> is <code>false</code>, meaning a field
+doesn&#8217;t have to be present with the save.</p>
+</li>
+<li>
+<p>The <code>allowEmpty</code> flag lets you skip all validation rules for a field or fail immediately if the field is left empty.
+This empty check is defined <code>true</code> for any value for which <a href="http://www.php.net/empty"><code>empty</code></a> returns <code>true</code>,
+except for <code>"0"</code>, which is considered non-empty. Now comes the confusing part: <strong><code>allowEmpty</code> has three possible
+values, not two</strong>. Specifying <code>true</code> would cause validation to be skipped if the field is empty, specifying <code>false</code>
+causes it to fail in that case. You might already see the missing third case here: the one that skips the empty
+check and just executes the validation rule. This is actually the default behavior - it happens when you don&#8217;t
+specify <code>allowEmpty</code> at all. The explicit equivalent of this would be <code>allowEmpty = null</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I hope this settles some of the confusion.</p>
+</div>
+<div class="paragraph">
+<p>One more thing though: sometimes you want a different validation error for when a field has not been specified
+but should have been - this is impossible when adding <code>required = true</code> to an existing rule (because that rule
+has its own validation error). The solution is adding a validation rule that always succeeds to your model:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">// The validation rules
+public $validate = array(
+	'fieldName' =&gt; array(
+		'required' =&gt; array(
+			'rule' =&gt; 'present',
+			'message' =&gt; 'This field is required',
+			'required' =&gt; true
+		),
+		'some_other_rule' =&gt; array(
+			'rule' =&gt; 'whatever',
+			'message' =&gt; 'Some other condition is not met'
+		)
+	)
+);
+
+
+// The rule
+public function present() {
+	return true;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This way validation will fail with a "This field is required" error if it is left out, and another appropriate
+error if a different condition fails.</p>
+</div>
+

@@ -1,0 +1,26 @@
+---
+layout: post
+title: "Using raw HTML in AsciiDoc"
+date: 2015-03-14
+background: '/images/cover.jpg'
+tags: hubpress asciidoc
+---
+
+        <div class="paragraph">
+<p>Now that I&#8217;m using HubPress for my blog, I have to work with <a href="http://www.methods.co.nz/asciidoc/userguide.html">AsciiDoc</a>. Coming form MarkDown, I was used to just putting raw HTML in a paragraph whenever I wanted to. This doesn&#8217;t work in AsciiDoc; entities are being converted. But, as it turns out <a href="http://mrhaki.blogspot.nl/2014/06/awesome-asciidoc-include-raw-html.html">the solution is straightforward</a>, wrapping code in four plus signs,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>++++
+&lt;p style="color:red"&gt;This is red&lt;/p&gt;
+++++</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will result in:</p>
+</div>
+<p style="color:red">This is red</p>
+<div class="paragraph">
+<p>Sweet, easy enough!</p>
+</div>
+

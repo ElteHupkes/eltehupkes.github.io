@@ -1,0 +1,97 @@
+---
+layout: post
+title: "Globally parsing JSON error responses with `jQuery.ajax()`"
+date: 2013-05-07
+background: '/images/cover.jpg'
+tags: jquery rest
+---
+
+        <div class="paragraph">
+<p>Proper RESTful API&#8217;s use status codes to indicate the result of requests. This means that for <code>PUT</code>/<code>PATCH</code>
+requests a <code>400 Bad Request</code> or a <code>409 Conflict</code> will be returned if the data in the request is invalid. Since this
+is a solvable error for the end user, the API might return descriptive errors, perhaps something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+	"errors": {
+		"email": "Invalid e-mail address"
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Awesome, but if you want to actually <em>show</em> these errors to the end user you&#8217;ll need access to
+the request data. If you&#8217;re using jQuery, accessing data for requests with a 2xx (success) status code is easy;
+if the request&#8217;s <code>Content-Type</code> is <code>application/json</code>, jQuery will parse it for you. For 4xx and 5xx requests not
+so much though; you need to do something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$.post('/whatever', '{}').fail(function(xhr) {
+	try {
+		var validationErrors = JSON.parse(xhr.responseText);
+		displayErrors(validationErrors.errors);
+	} catch(e) {
+		// Invalid JSON error handling
+	}
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re a bit lazy like me though, you don&#8217;t want to do this manually for every scenario in which you&#8217;ll be handling
+errors like this. Preferably, the JSON data is automatically available in every XHR&#8217;s fail callback.
+Unfortunately, <code>$.ajaxError</code> and <code>$.ajaxComplete</code> are worthless in this scenario, since they fire <em>after</em> user defined
+callbacks. The solution is overriding <code>$.ajax</code> so you can always assign the first callback. A solution like this
+can be found <a href="http://wingkaiwan.com/2012/10/21/deserialize-error-in-json-for-jquery-ajax/">on this page</a>, but it is
+incomplete, as any "error" callback assigned through in `$.ajax&#8217;s options will still run before the global callback.
+I therefore rewrote this code to work in that scenario as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">(function($) {
+	var old = $.ajax;
+	$.ajax = function(url, options) {
+		if (!options) {
+			options = url || {};
+		}
+
+		var fail;
+		if (options.error) {
+			// Remove the error callback and add it
+			// as a fail callback on the XHR later on.
+			fail = options.error;
+			delete options.error;
+		}
+
+		var xhr = old.call(this, url, options).fail(function(xhr) {
+			if (xhr.getResponseHeader('content-type').indexOf('application/json') &gt; -1) {
+				try {
+					xhr.JSONdata = JSON.parse(xhr.responseText);
+				} catch(e) {}
+			}
+		});
+
+		if (fail) {
+			// Assign the error callback
+			xhr.fail(fail);
+		}
+
+		return xhr;
+	}
+})(jQuery);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There you go! Now in your fail callback you can simply use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">$.post('/whatever', '{}').fail(function(xhr) {
+	if (xhr.JSONdata) {
+		displayErrors(xhr.JSONdata.errors);
+	}
+});</code></pre>
+</div>
+</div>
+

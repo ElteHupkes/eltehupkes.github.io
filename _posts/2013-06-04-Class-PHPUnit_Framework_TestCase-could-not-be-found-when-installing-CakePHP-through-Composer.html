@@ -1,0 +1,38 @@
+---
+layout: post
+title: "`Class PHPUnit_Framework_TestCase could not be found` when installing CakePHP through Composer"
+date: 2013-06-04
+background: '/images/cover.jpg'
+tags: cakephp
+---
+
+        <div class="paragraph">
+<p>Recently Mark Story (one of CakePHP&#8217;s main guys)
+<a href="http://mark-story.com/posts/view/installing-cakephp-with-composer">wrote a great article</a> about how to install CakePHP
+with Composer. I ran into an issue with today that might or might not suddenly occur when you do this and are also using
+<code>CakeEmail</code>, so I figured I&#8217;d share it.</p>
+</div>
+<div class="paragraph">
+<p>Composer adds a class loader to your application, if you choose include it (and you should, otherwise it doesn&#8217;t
+really make sense to use Composer). Using Mark&#8217;s trick you can make sure
+that this class loader doesn&#8217;t override Cake&#8217;s default class loader, however this still leaves one potential problem.
+This problem lies with the class you&#8217;re supposed to create for email configuration: <code>EmailConfig</code>. The file this class
+is in is included directly by <code>CakeEmail</code> rather then loaded through <code>App</code>. Before it is included though, <code>CakeEmail</code>
+checks whether the class already exists using <a href="http://www.php.net/class_exists"><code>class_exists()</code></a>. Since Cake&#8217;s
+autoloader <code>App::load()</code> is not configured to find it, the task is automatically delegated to Composer&#8217;s class loader,
+which pretty much knows about every class in your entire project. This would be fine, had it not been for the fact that
+the test cases in the Cake core also include an <code>EmailConfig</code> class. At this point it is basically a gamble which one
+it is going to include: it included the right file on my PC, but crashed with the error in the title on another.</p>
+</div>
+<div class="paragraph">
+<p>Since you can&#8217;t be sure this will go well if you, say, deploy your code to production on another server, you&#8217;ll have
+to somehow force the right <code>EmailConfig</code> class. There&#8217;s no easy way to do this using <code>App::uses()</code> unfortunately (the
+config file doesn&#8217;t fit in the convention), but for now I solved it by simply including the <code>email.php</code> file in
+<code>bootstrap.php</code> below Mark&#8217;s autoloader fix:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-php" data-lang="php">require APP.'/Config/email.php';</code></pre>
+</div>
+</div>
+

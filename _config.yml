@@ -35,7 +35,6 @@ paginate_path:      "/posts/page:num/"
 #theme: minima
 remote_theme: StartBootstrap/startbootstrap-clean-blog-jekyll
 plugins:
-  - jekyll-asciidoc
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
