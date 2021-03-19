@@ -8,7 +8,7 @@ tags: pytorch fastai machine-learning computer-vision
 
 # Keypoint regression with heatmaps in fastai v2
 
-*This post is also available as [a Jupyter notebook in my website's repository](https://github.com/ElteHupkes/eltehupkes.github.io/blob/gh-pages/_notebooks/2021-03-10-keypoint-regression-fastai.ipynb)*
+*This post is also available as [a Jupyter notebook in my website's repository](https://github.com/ElteHupkes/eltehupkes.github.io/blob/gh-pages/_notebooks/2021-03-10-keypoint-regression-fastai.ipynb). If you have questions or suggestions, feel free to create an issue on GitHub!*
 
 A common task in computer vision is finding points of interest in images. For instance, think about locating the position of facial features or joint positions, or locating a set of keys in a picture of your living room (I'm not aware of anybody having built this, but they should). There's a [tutorial in the fastai documentation](https://docs.fast.ai/tutorial.vision.html#Points) showing a quick way to create a keypoint regressor using a convolutional neural net. The way this works is simple: take a pretrained network, and slap a linear layer at the end that predicts `(x,y)` coordinates for the number of points that you're interested in.
 
