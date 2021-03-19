@@ -27,7 +27,7 @@ As a bonus I'm going look into reducing the rounding error by implementing [Heat
 ```
 
 ```python
-# Some debugging convenience. If you use trace() in a loop,
+# Some debugging convenience. If you use set_trace() in a loop,
 # you can turn it off temporarily using trace_off()
 from IPython.core.debugger import set_trace
 _set_trace = set_trace
